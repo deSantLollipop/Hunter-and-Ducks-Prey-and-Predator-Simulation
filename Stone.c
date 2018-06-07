@@ -33,7 +33,7 @@ int main()
 	//struct Duck mas[] or some list
 
 
-sustem("pause");
+system("pause");
 return 0;
 }
 

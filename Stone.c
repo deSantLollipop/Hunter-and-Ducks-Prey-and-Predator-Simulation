@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library
 
 struct Hunter
@@ -18,17 +19,19 @@ struct Duck {       // main structure for ducks with set parametrs
 	bool flyable;
 	int hp;
 	int getdamage;
+	char type[3];
 };
 
-struct Duck MallardDuck = { true, true,  100, 0 };
-struct Duck RedHatDuck =  { true, true,  120, 0 };
-struct Duck RubberDuck =  { true, false, 200, 0 };
+struct Duck MallardDuck = { true, true,  100, 0, "mlr" };
+struct Duck RedHatDuck =  { true, true,  120, 0, "rdh" };
+struct Duck RubberDuck =  { true, false, 200, 0, "rbr" };
 
 struct Duck ducks[20]; // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
 
 
-void DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd) // this function only creates array of ducks, and do not return values - (void)
+int DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd)
 {
+	int DHP = 0;
 	for (i = 0; i<numd; i++)
 	{
 		typd = rand() % 3; // randomly chooses type of duck
@@ -56,6 +59,7 @@ void DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int nu
 			printf("RubberDucks : %d\n", rbrcount);
 		}
 	}
+	return DHP;
 }
 
 
@@ -64,10 +68,11 @@ int main()
 	srand(time(NULL));
 	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0;
 	int numd = rand() % 21;  //randomly choose number of ducks
-	DuckArray(i,typd,rhtcount,rbrcount,mlrcount,numd);
+	int DHP = DuckArray(i,typd,rhtcount,rbrcount,mlrcount,numd);
 
 
 
 	system("pause");
 	return 0;
 }
+

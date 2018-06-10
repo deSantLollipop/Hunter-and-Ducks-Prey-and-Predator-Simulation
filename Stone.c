@@ -8,7 +8,7 @@ struct Hunter
 {
 	bool alive;
 	int hp;
-	int getdamage;
+	int dmg;
 };
 
 struct Hunter Robbin = {true, 500, 0 }; // the hunter himself
@@ -65,14 +65,72 @@ int DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int num
 	return DHP;
 }
 
+void Start()
+{
+	srand(time(NULL));
+
+	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum; //typd - duck type;		xxxcount - each type counters;	crit - critical hit;	stotnum - shot counter
+	
+	int numd = rand() % 21;  //randomly choose number of ducks
+	int r = rand() % 10;
+	int	r1 = rand() % 10;
+	int	r2 = rand() % 10;
+
+
+	
+	int DHP = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
+	//printf("DHP = %d", DHP);
+
+	printf("Hunter has %d HP and %d DMG \n", Robbin.hp, Robbin.dmg);
+	printf("-----------------------------------------------------------------------------------------------------------------");
+
+	printf("Hunter is shooting \n");
+
+	while (DHP > 0)
+	{
+		for (i = 0; i<numd; i++)
+		{
+			if (r == 0)
+			{
+				printf("Possible critical hit= %d %", 100 / (crit - 1));
+				//duck[i].hp-= hnt.dmg * 2;
+				printf("Critical damage x2!");
+				shotnum++;
+				crit = 10;
+				printf("Hunter shot number = %d ", shotnum);
+				
+			}
+			else
+			{
+				r = rand() % 10;
+					//duck[i].hp -= hnt.dmg;
+					crit--;
+					shotnum++;
+					printf("Possible critical hit= %d %", 100 / r);
+					printf("Hunter shot number = %d ", shotnum);
+				
+			} 		
+			if (Robbin.hp <= 0)
+				{
+						printf("Ducks won!!!");
+						break;
+				}	
+				else if (DHP <= 0)
+				{
+						printf("Hunter won!!!");
+						break;
+				}
+		}
+	}
+	
+}
+
+
+
 
 int main()
 {
-	srand(time(NULL));
-	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0;
-	int numd = rand() % 21;  //randomly choose number of ducks
-	int DHP = DuckArray(i,typd,rhtcount,rbrcount,mlrcount,numd);
-	//printf("DHP = %d", DHP);
+	
 
 
 	system("pause");

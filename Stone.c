@@ -1,65 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <stdbool.h>//without this my visual studio don't want to recognise normaly 'bool'
+#include <stdbool.h> // It seems that you may not need on other computer this library
 
-//There is lake, where are ducks and huter, simulation of hunting game.
-//{
-//	int a;
-//};
-
-struct Hunter 
+struct Hunter
 {
-	int hp;
+	int hp;		
 	int damage;
 };
 
-struct Duck {
-	bool flyable;
-	int hp;
-	int getdamage;	
-	/*struct Duck *next;*/
-}/**first*/;
+struct Duck {       // main structure for ducks with set parametrs
+	bool flyable; 
+	int hp;		  
+	int getdamage;
+};
 
-	struct Duck MallardDuck = {true,100,0}; 
-	struct Duck RedHatDuck  = {true,120,0};
-	struct Duck RubberDuck  = {false, 200, 20};
+struct Duck MallardDuck = { true,100,0 };		//
+struct Duck RedHatDuck = { true,120,0 };		
+struct Duck RubberDuck = { false, 200, 20 };	
 
 
 void DuckList()
 {
 
-	int i, typd;
-	int numd = rand() %50;
+	int i=0, typd=0, rhtcount=0,rbrcount=0, mlrcount=0;
+	int numd = rand() % 21;
 
-	struct Duck ducks[50];
+	struct Duck ducks[20];
 
 
-	for(i=0; i<numd; i++)
+	for (i = 0; i<numd; i++)
 	{
-	//	ducks[i] = {};
+		typd = rand() % 3;
+		if (typd == 0)
+		{
+			ducks[i] = RedHatDuck;
+			rhtcount++;
+		}
+		if (typd == 1)
+		{
+			ducks[i] = MallardDuck;
+			mlrcount++;
+		}
+		if (typd == 2)
+		{
+			ducks[i] = RubberDuck;
+			rbrcount++;
+		}
+
+		if (i == numd - 1)
+		{
+			printf("Ducks in total : %d\n", i);
+			printf("RedhatDucks : %d\n", rhtcount);
+			printf("MallarDucks : %d\n", mlrcount);
+			printf("RubberDucks : %d\n", rbrcount);
+		}
 	}
 
-	//struct Duck *tmpf=first;
-    //for(i=1; i<list_size; i++){
-	//struct Duck *temp=(struct Duck *)malloc(sizeof(struct Duck));
-	//temp->n=liczba;
-	//tmpf->next=temp;
-    //temp->next=NULL;
-    //tmpf=temp;}
+	
 
 }
 
 int main()
 {
 	srand(time(NULL));
-	//struct Duck mas[] or some list
-
-
-system("pause");
-return 0;
+	DuckList();
+	
+	system("pause");
+	return 0;
 }
-
-
-
-

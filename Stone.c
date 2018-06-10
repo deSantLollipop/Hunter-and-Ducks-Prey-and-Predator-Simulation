@@ -22,8 +22,8 @@ struct Duck {       // main structure for ducks with set parametrs
 	char type[3];
 };
 
-struct Duck MallardDuck = { true, true,  100, 0, "mlr" };
-struct Duck RedHatDuck =  { true, true,  120, 0, "rdh" };
+struct Duck RedHatDuck = { true, true,  80, 0, "rdh" };
+struct Duck MallardDuck = { true, true,  70, 0, "mlr" };
 struct Duck RubberDuck =  { true, false, 200, 0, "rbr" };
 
 struct Duck ducks[20]; // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
@@ -39,16 +39,19 @@ int DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int num
 		{
 			ducks[i] = RedHatDuck;
 			rhtcount++;
+			DHP += ducks[i].hp;
 		}
 		if (typd == 1)
 		{
 			ducks[i] = MallardDuck;
 			mlrcount++;
+			DHP += ducks[i].hp;
 		}
 		if (typd == 2)
 		{
 			ducks[i] = RubberDuck;
 			rbrcount++;
+			DHP += ducks[i].hp;
 		}
 
 		if (i == (numd - 1))
@@ -69,10 +72,9 @@ int main()
 	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0;
 	int numd = rand() % 21;  //randomly choose number of ducks
 	int DHP = DuckArray(i,typd,rhtcount,rbrcount,mlrcount,numd);
-
+	//printf("DHP = %d", DHP);
 
 
 	system("pause");
 	return 0;
 }
-

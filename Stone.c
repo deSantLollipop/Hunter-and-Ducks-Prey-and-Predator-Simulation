@@ -5,31 +5,31 @@
 
 struct Hunter
 {
-	int hp;		
-	int damage;
-};
-
-struct Duck {       // main structure for ducks with set parametrs
-	bool flyable; 
-	int hp;		  
+	bool alive;
+	int hp;
 	int getdamage;
 };
 
-struct Duck MallardDuck = { true,100,0 };		
-struct Duck RedHatDuck = { true,120,0 };		
-struct Duck RubberDuck = { false, 200, 20 };	
+struct Hunter Robbin = {true, 500, 0 }; // the hunter himself
+
+struct Duck {       // main structure for ducks with set parametrs
+
+	bool alive;
+	bool flyable;
+	int hp;
+	int getdamage;
+};
+
+struct Duck MallardDuck = { true, true,  100, 0 };
+struct Duck RedHatDuck =  { true, true,  120, 0 };
+struct Duck RubberDuck =  { true, false, 200, 0 };
+
+struct Duck ducks[20]; // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
 
 
-void DuckArray() // this function only creates array of ducks, and do not return values - (void)
+void DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd) // this function only creates array of ducks, and do not return values - (void)
 {
-
-	int i=0, typd=0, rhtcount=0,rbrcount=0, mlrcount=0;
-	int numd = rand() % 21;  //randomly choose number of ducks
-
-	struct Duck ducks[20];    // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
-
-
-	for (i = 0; i<numd; i++) 
+	for (i = 0; i<numd; i++)
 	{
 		typd = rand() % 3; // randomly chooses type of duck
 		if (typd == 0)
@@ -48,24 +48,26 @@ void DuckArray() // this function only creates array of ducks, and do not return
 			rbrcount++;
 		}
 
-		if (i == numd - 1)
+		if (i == (numd - 1))
 		{
-			printf("Ducks in total : %d\n", i);
+			printf("Ducks in total : %d\n", numd);
 			printf("RedhatDucks : %d\n", rhtcount);
 			printf("MallarDucks : %d\n", mlrcount);
 			printf("RubberDucks : %d\n", rbrcount);
 		}
 	}
-
-	
-
 }
+
 
 int main()
 {
 	srand(time(NULL));
-	DuckList();
-	
+	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0;
+	int numd = rand() % 21;  //randomly choose number of ducks
+	DuckArray(i,typd,rhtcount,rbrcount,mlrcount,numd);
+
+
+
 	system("pause");
 	return 0;
 }

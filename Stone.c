@@ -11,20 +11,21 @@ struct Hunter
 	int dmg;
 };
 
-struct Hunter Robbin = {true, 500, 50 }; // the hunter himself
+struct Hunter Robbin = {true, 500, 60 }; // the hunter himself
 
 struct Duck {       // main structure for ducks with set parametrs
 
 	bool alive;
 	bool flyable;
+	bool here;
 	int hp;
-	int getdamage;
+	int dmg;
 	char type[3];
 };
 
-struct Duck RedHatDuck = { true, true,  80, 0, "rdh" };
-struct Duck MallardDuck = { true, true,  70, 0, "mlr" };
-struct Duck RubberDuck =  { true, false, 200, 0, "rbr" };
+struct Duck RedHatDuck = { true, true, true,  120, 0, "rdh" };
+struct Duck MallardDuck = { true, true, true,  130, 0, "mlr" };
+struct Duck RubberDuck =  { true, true,false, 200, 20, "rbr" };
 
 struct Duck ducks[20]; // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
 
@@ -69,16 +70,15 @@ void Start()
 {
 	srand(time(NULL));
 
-	int i = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum; //typd - duck type;		xxxcount - each type counters;	crit - critical hit;	stotnum - shot counter
+	int i = 0, r = 0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0; //typd - duck type;		xxxcount - each type counters;	crit - critical hit;	stotnum - shot counter;		dklive - number of allive ducks;	dkill- kill counter;
 	
 	int numd = rand() % 21;  //randomly choose number of ducks
-	int r;
+	dklive = numd;
 
 
 	
 	int DHP = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
-	//printf("DHP = %d", DHP);
-
+	
 	printf("Hunter has %d HP and %d DMG \n", Robbin.hp, Robbin.dmg);
 	printf("-----------------------------------------------------------------------------------------------------------------");
 
@@ -86,64 +86,86 @@ void Start()
 
 	while (DHP > 0)
 	{
+
+		if (ducks[i].here == false)
+			i++;
+
 		r = rand() % 9;
 		if (r > 3)
 		{
+			printf("Possible critical hit= %d %\n", 100 / crit);
 			ducks[i].hp -= Robbin.dmg;
 			crit--;
 			shotnum++;
-			printf("Possible critical hit= %d %", 100 / r);
-			printf("Hunter shot number = %d ", shotnum);
-			break;
+			printf("Hunter shot number = %d \n", shotnum);
+
 		}
 		else
 			switch (r)
 			{
 			case 0:
-				printf("Possible critical hit= %d %", 100 / (crit - 1));
+				printf("Possible critical hit= %d %\n", 100 / 2);
 				ducks[i].hp -= Robbin.dmg * 2;
-				printf("Critical damage x2!");
+				printf("Critical damage x2!\n");
 				shotnum++;
 				crit = 10;
-				printf("Hunter shot number = %d ", shotnum);
+				printf("Hunter shot number = %d \n", shotnum);
 			case 1:
-				ducks[i].hp -= Robbin.dmg;
+				printf("Possible critical hit= %d %\n", 100 / crit);
 				crit--;
 				shotnum++;
-				printf("Possible critical hit= %d %", 100 / r);
-				printf("Hunter shot number = %d ", shotnum);
+				printf("Hunter missed, but duck still here\n");
+				printf("Hunter shot number = %d \n", shotnum);
 				break;
 			case 2:
-				ducks[i].hp -= Robbin.dmg;
+				printf("Possible critical hit= %d %\n", 100 / crit);
 				crit--;
 				shotnum++;
-				printf("Possible critical hit= %d %", 100 / r);
-				printf("Hunter shot number = %d ", shotnum);
+				if (ducks[i].flyable == true)
+				{
+					printf("Hunter missed, duck flew away ..\n");
+					ducks[i].here = false;
+				}
+				printf("Hunter shot number = %d \n", shotnum);
 				break;
 			case 3:
-				ducks[i].hp -= Robbin.dmg;
+				printf("Possible critical hit= %d %\n", 100 / crit);
 				crit--;
 				shotnum++;
-				printf("Possible critical hit= %d %", 100 / r);
-				printf("Hunter shot number = %d ", shotnum);
+				if (ducks[i].flyable == false)
+				{
+					printf("Ricochet hited hunter...\n");
+					Robbin.hp -= 20 + 20 * (10 / crit);
+				}
+				printf("Hunter shot number = %d \n", shotnum);
 				break;
 			default:
-				printf("Something is wrong.");
+				printf("Something is wrong.\n");
+				break;
+			}
+		if (ducks[i].hp == 0)
+		{
+			ducks[i].alive == false;
+			dkill++;
+			dklive -= dkill;
+
+		}
+		if (i == (numd - 1))
+		{
+			if (dkill <= (numd / 2))
+			{
+				printf("Ducks won!!! %d alive ducks\n", dklive);
+				break;
+			}
+			else if (DHP <= 0)
+			{
+				printf("Hunter won!!! %d / %d \n", dkill);
 				break;
 			}
 
-				if (Robbin.hp <= 0)
-				{
-					printf("Duck won!!!");
-					break;
-				}
-				else if (DHP <= 0)
-				{
-					printf("Hunter won!!!");
-					break;
-				}
-		
-				i++;
+			i++;
+
+		}
 	}
 }
 
@@ -154,9 +176,9 @@ void Start()
 
 int main()
 {
+	Start();
+
 	
-
-
 	system("pause");
 	return 0;
 }

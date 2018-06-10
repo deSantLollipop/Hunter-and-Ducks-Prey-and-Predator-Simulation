@@ -134,7 +134,7 @@ void Start()
 				shotnum++;
 				if (ducks[i].flyable == false)
 				{
-					printf("Ricochet hited hunter...\n");
+					printf("Hunter was hited by ricochet ...\n");
 					Robbin.hp -= 20 + 20 * (10 / crit);
 				}
 				printf("Hunter shot number = %d \n", shotnum);

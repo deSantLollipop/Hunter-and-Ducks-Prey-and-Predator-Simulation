@@ -15,23 +15,23 @@ struct Duck {       // main structure for ducks with set parametrs
 	int getdamage;
 };
 
-struct Duck MallardDuck = { true,100,0 };		//
+struct Duck MallardDuck = { true,100,0 };		
 struct Duck RedHatDuck = { true,120,0 };		
 struct Duck RubberDuck = { false, 200, 20 };	
 
 
-void DuckList()
+void DuckArray() // this function only creates array of ducks, and do not return values - (void)
 {
 
 	int i=0, typd=0, rhtcount=0,rbrcount=0, mlrcount=0;
-	int numd = rand() % 21;
+	int numd = rand() % 21;  //randomly choose number of ducks
 
-	struct Duck ducks[20];
+	struct Duck ducks[20];    // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
 
 
-	for (i = 0; i<numd; i++)
+	for (i = 0; i<numd; i++) 
 	{
-		typd = rand() % 3;
+		typd = rand() % 3; // randomly chooses type of duck
 		if (typd == 0)
 		{
 			ducks[i] = RedHatDuck;

@@ -28,12 +28,12 @@ struct Duck RedHatDuck =  { true, true, true,  120.0, 0.0, "RedHatDuck " };
 struct Duck MallardDuck = { true, true, true, 130.0, 0.0, "MallardDuck " };
 struct Duck RubberDuck =  { true, true, false, 200.0, 20.0, "RubberDuck "};
 
-struct Duck ducks[20]; // array of structures (max 20, in my point of view 20 ducks for one small lake is enough)
+struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in my point of view 20 ducks for one small lake is enough)
 
-double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd)
+double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd) //function type double
 {
 	double DHP = 0;
-	for (i = 0; i < numd; i++)
+	for (i = 0; i < numd; i++) //filling aray
 	{
 		typd = rand() % 3; // randomly chooses type of duck
 		if (typd == 0)
@@ -66,55 +66,17 @@ double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int 
 	return DHP;
 }
 
-//void Check() 
-//{
-//	
-//	if ((ducks[i].hp <= 0) || (i > numd))
-//	{
-//	ducks[i].alive = false;
-//	dkill++;
-//	dklive -= dkill;
-//	if ((dkill > (numd/2 + 3)) && (shotnum<=10) )
-//	{
-//	printf("Hunter won!!! %d / %d \n", dkill, numd);
-//	return 0;
-//	}
-//	else if((shotnum>25)&& (dklive>=numd/2))
-//	{
-//	printf("Ducks won!!! %d alive ducks\n", dklive);
-//	return 0;
-//	}
-//	i++;
-//	}
-//
-//	//if (ducks[i].alive == false)
-//	//i++; //next duck
-//
-//
-//	if (Robbin.hp <= 0)
-//	{
-//	Robbin.alive = false;
-//	printf("Ducks won!!! %d alive ducks\n", dklive);
-//	return 0;
-//	}
-//
-//	if (ducks[i].here == false)	//if duck flew away priviously, hunter starts shooting next
-//	{
-//	break;
-//	}
-//
-//}
-
-
 int main()
 {
 	srand(time(NULL));
 
-	int i = 0, j, r = 0, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0; //typd - duck type;		xxxcount - each type counters;	crit - critical hit;	stotnum - shot counter;		dklive - number of allive ducks;	dkill- kill counter;
+	int i = 0, j, r = 0, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0; 
+	
+	//typd - duck type; xxxcount - each type counters; crit - critical hit;	stotnum - shot counter;	dklive/kill - counters of ducks
+	
 	char s[1];
 	double dmg = 0.0;
 	int numd = rand() % 6 + 15;  //randomly choose number of ducks (for random in scale [M1; M2] : Number = rand() % (M2 - M1 + 1) + M1)
-	printf("numd = %d",numd);
 	dklive = numd;
 
 	
@@ -130,16 +92,16 @@ int main()
 
 
 
-	while (DHP > 0)
+	while (DHP > 0) //main_cykle
 	{
 
-		r0 = 2;//rand() % 3 + 1;             //hunter has from 1 to 3 shots  
+		rand() % 3 + 1;             //hunter has 1-2 extra shots  
 
-		for (j=0; j < r0; j++)
+		for (j=0; j < r0; j++) //sub_cykle for extra shots
 		{			
 			
-
-
+			
+			
 			printf("%s has %.f HP!\n...aiming\n", ducks[i].type, ducks[i].hp);
 				
 			r = rand() % 9;

@@ -95,7 +95,7 @@ int main()
 	while (DHP > 0) //main_cykle
 	{
 
-		rand() % 3 + 1;             //hunter has 1-2 extra shots  
+		r0 = rand() % 3 + 1;             //hunter has 1-2 extra shots  
 
 		for (j=0; j < r0; j++) //sub_cykle for extra shots
 		{			

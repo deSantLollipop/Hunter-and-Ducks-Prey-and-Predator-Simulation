@@ -11,7 +11,7 @@ struct Hunter
 	double dmg;
 };
 
-struct Hunter Robbin = {true, 500.0, 60.0 }; // the hunter himself
+struct Hunter Robbin = { true, 500.0, 60.0 }; // the hunter himself
 
 struct Duck {       // main structure for ducks with set parametrs
 
@@ -24,9 +24,9 @@ struct Duck {       // main structure for ducks with set parametrs
 	char type[12];
 };
 
-struct Duck RedHatDuck =  { true, true, true,  120.0, 0.0, "RedHatDuck " };
+struct Duck RedHatDuck = { true, true, true,  120.0, 0.0, "RedHatDuck " };
 struct Duck MallardDuck = { true, true, true, 130.0, 0.0, "MallardDuck " };
-struct Duck RubberDuck =  { true, true, false, 200.0, 20.0, "RubberDuck "};
+struct Duck RubberDuck = { true, true, false, 200.0, 20.0, "RubberDuck " };
 
 struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in my point of view 20 ducks for one small lake is enough)
 
@@ -70,25 +70,25 @@ int main()
 {
 	srand(time(NULL));
 
-	int i = 0, j, r = 0, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0; 
-	
+	int i = 0, j, r = 0, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
+
 	//typd - duck type; xxxcount - each type counters; crit - critical hit;	stotnum - shot counter;	dklive/kill - counters of ducks
-	
+
 	char s[1];
 	double dmg = 0.0;
 	int numd = rand() % 6 + 15;  //randomly choose number of ducks (for random in scale [M1; M2] : Number = rand() % (M2 - M1 + 1) + M1)
 	dklive = numd;
 
-	
+
 	double DHP = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
 	printf("\n---------------------------------------------------------------\n\n");
 	printf("In total Ducks have %.f HP\n", DHP);
 	printf("Hunter has %.f HP and %.f DMG \n\n", Robbin.hp, Robbin.dmg);
-	
+
 	printf("---------------------------------------------------------------\n");
 	printf("Press  <-'ENTER    to start the hunt ... \n");
 	printf("---------------------------------------------------------------\n");
-	scanf("%c", s);
+	scanf("%c", &s);
 
 
 
@@ -97,13 +97,13 @@ int main()
 
 		r0 = rand() % 3 + 1;             //hunter has 1-2 extra shots  
 
-		for (j=0; j < r0; j++) //sub_cykle for extra shots
-		{			
-			
-			
-			
+		for (j = 0; j < r0; j++) //sub_cykle for extra shots
+		{
+
+
+
 			printf("%s has %.f HP!\n...aiming\n", ducks[i].type, ducks[i].hp);
-				
+
 			r = rand() % 9;
 			if (r > 3)
 			{
@@ -212,7 +212,7 @@ int main()
 					break;
 				}
 			}
-			
+
 			if (ducks[i].hp <= 0)
 			{
 				ducks[i].alive = false;
@@ -222,7 +222,7 @@ int main()
 				dklive--;
 				i++;
 			}
-			if ((dkill >= 1)&& (dkill >=numd/2) && (shotnum < 30))
+			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 30))
 			{
 				printf("Hunter won!!! %d / %d \n", dkill, numd);
 				return 0;
@@ -232,12 +232,12 @@ int main()
 				printf("Hunter won! All ducks were shoted down ! %d / %d !\n", dkill, numd);
 				return 0;
 			}
-			else if ((shotnum>=30) || (Robbin.hp <= 0))
+			else if ((shotnum >= 30) || (Robbin.hp <= 0))
 			{
 				printf("Ducks won!!! %d alive ducks\n", dklive);
 				return 0;
 			}
-		
+
 		}
 	}
 

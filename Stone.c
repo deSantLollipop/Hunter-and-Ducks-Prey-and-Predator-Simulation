@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>				
+#include <stdlib.h>				//check dhp/DHP
 #include <time.h>
 #include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library
@@ -19,19 +19,23 @@ struct Duck {       // main structure for ducks with set parametrs
 	bool here;
 	bool alive;
 	bool flyable;
+	int x;
+	int y;
 	double hp;
 	double dmg;
-	char type[12];
+	char type[13];
+
 };
 
-struct Duck RedHatDuck = { true, true, true,  120.0, 0.0, "RedHatDuck " };
-struct Duck MallardDuck = { true, true, true, 130.0, 0.0, "MallardDuck " };
-struct Duck RubberDuck = { true, true, false, 200.0, 20.0, "RubberDuck " };
+struct Duck RedHatDuck = { true, true, true, 11, 11,120.0, 0.0, "RedHatDuck " };
+struct Duck MallardDuck = { true, true, true, 11, 11,130.0, 0.0, "MallardDuck " };
+struct Duck RubberDuck = { true, true, false, 11, 11,200.0, 20.0, "RubberDuck " };
 
 struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in my point of view 20 ducks for one small lake is enough)
 
-double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd) //function type double
+double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) //function type double
 {
+	int i;
 	double dhp = 0;
 	for (i = 0; i < numd; i++) //filling aray
 	{
@@ -66,11 +70,45 @@ double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int 
 	return dhp;
 }
 
+
+void PositionOnLake(int numd, int xlake, int ylake)
+{
+	int i;
+	int xrand = 0, yrand = 0;
+	bool rok = false, yok = true;
+
+	//X
+	for (i = 0; i < numd; i++)
+	{
+		xrand = rand() % 10;
+		while (rok != true)
+		{
+			for (i = 0; i < numd; i++)
+			{
+				if(xrand==ducks[i].x)
+					xrand== rand() % 10;
+				
+			}
+		}
+	
+	
+	}
+
+
+	//Y
+
+
+
+}
+
+
+
+
 int main()
 {
 	srand(time(NULL));
 
-	int i = 0, j, r = 0, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
+	int i = 0, j, r = 0, xlake=10, ylake=10, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
 
 	//typd - duck type; xxxcount - each type counters; crit - critical hit;	stotnum - shot counter;	dklive/kill - counters of ducks
 
@@ -80,7 +118,7 @@ int main()
 	dklive = numd;
 
 
-	double dhp = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
+	double dhp = DuckArray(typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
 	printf("\n---------------------------------------------------------------\n\n");
 	printf("In total Ducks have %.f HP\n", dhp);
 	printf("Hunter has %.f HP and %.f DMG \n\n", Robbin.hp, Robbin.dmg);
@@ -217,7 +255,7 @@ int main()
 			{
 				ducks[i].alive = false;
 				dkill++;         				//kill counter
-				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type); 
+				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type);
 				printf("---------------------------------------------------------------\n");
 				dklive--;                                  //live counter
 				i++;         				//switching to the next duck in case of death

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>				//check dhp/DHP
+#include <stdlib.h>				
 #include <time.h>
 #include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library
@@ -82,7 +82,7 @@ int main()
 
 	double dhp = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
 	printf("\n---------------------------------------------------------------\n\n");
-	printf("In total Ducks have %.f HP\n", DHP);
+	printf("In total Ducks have %.f HP\n", dhp);
 	printf("Hunter has %.f HP and %.f DMG \n\n", Robbin.hp, Robbin.dmg);
 
 	printf("---------------------------------------------------------------\n");

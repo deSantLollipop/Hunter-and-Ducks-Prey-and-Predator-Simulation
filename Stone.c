@@ -213,16 +213,16 @@ int main()
 				}
 			}
 
-			if (ducks[i].hp <= 0)
+			if (ducks[i].hp <= 0)                          //cheking if duck is alive
 			{
 				ducks[i].alive = false;
-				dkill++;
-				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type);
+				dkill++;         				//kill counter
+				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type); 
 				printf("---------------------------------------------------------------\n");
-				dklive--;
-				i++;
+				dklive--;                                  //live counter
+				i++;         				//switching to the next duck in case of death
 			}
-			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 30))
+			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 30))  //conditions for end of game simulation
 			{
 				printf("Hunter won!!! %d / %d \n", dkill, numd);
 				return 0;

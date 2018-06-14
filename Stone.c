@@ -32,7 +32,7 @@ struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in 
 
 double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int numd) //function type double
 {
-	double DHP = 0;
+	double dhp = 0;
 	for (i = 0; i < numd; i++) //filling aray
 	{
 		typd = rand() % 3; // randomly chooses type of duck
@@ -40,19 +40,19 @@ double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int 
 		{
 			ducks[i] = RedHatDuck;
 			rhtcount++;
-			DHP += ducks[i].hp;
+			dhp += ducks[i].hp;
 		}
 		if (typd == 1)
 		{
 			ducks[i] = MallardDuck;
 			mlrcount++;
-			DHP += ducks[i].hp;
+			dhp += ducks[i].hp;
 		}
 		if (typd == 2)
 		{
 			ducks[i] = RubberDuck;
 			rbrcount++;
-			DHP += ducks[i].hp;
+			dhp += ducks[i].hp;
 		}
 
 		if (i == (numd - 1))
@@ -63,7 +63,7 @@ double DuckArray(int i, int typd, int rhtcount, int rbrcount, int mlrcount, int 
 			printf("RubberDucks : %d\n  ", rbrcount);
 		}
 	}
-	return DHP;
+	return dhp;
 }
 
 int main()
@@ -80,7 +80,7 @@ int main()
 	dklive = numd;
 
 
-	double DHP = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
+	double dhp = DuckArray(i, typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
 	printf("\n---------------------------------------------------------------\n\n");
 	printf("In total Ducks have %.f HP\n", DHP);
 	printf("Hunter has %.f HP and %.f DMG \n\n", Robbin.hp, Robbin.dmg);
@@ -92,7 +92,7 @@ int main()
 
 
 
-	while (DHP > 0) //main_cykle
+	while (dhp > 0) //main_cykle
 	{
 
 		r0 = rand() % 3 + 1;             //hunter has 1-2 extra shots  
@@ -113,7 +113,7 @@ int main()
 				{
 					dmg = Robbin.dmg + Robbin.dmg*(crit / 100.0);
 					ducks[i].hp -= dmg;
-					DHP -= dmg;
+					dhp -= dmg;
 					printf("Critical damage %.f  ! ! ! \n", dmg);
 					printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
 					crit = rand() % 10 + 1;
@@ -126,7 +126,7 @@ int main()
 				{
 					dmg = Robbin.dmg;
 					ducks[i].hp -= dmg;
-					DHP -= dmg;
+					dhp -= dmg;
 					printf("Damage =  %.f \n", dmg);
 					printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
 					crit = rand() % 10 + 1;
@@ -143,7 +143,7 @@ int main()
 					printf("Possible critical hit= %d %%\nshoting...\n", 100 / 2);
 					dmg = Robbin.dmg * 2;
 					ducks[i].hp -= dmg;
-					DHP -= dmg;
+					dhp -= dmg;
 					printf("Critical damage x2!\n");
 					printf("Duck [%d] hp = %.f\n", i, ducks[i].hp);
 					shotnum++;
@@ -174,7 +174,7 @@ int main()
 					{
 						dmg = Robbin.dmg / 2;
 						ducks[i].hp -= dmg;
-						DHP -= dmg;
+						dhp -= dmg;
 						printf("Damage =  %.f p \n", dmg);
 						printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
 
@@ -198,7 +198,7 @@ int main()
 					{
 						dmg = Robbin.dmg / 2;
 						ducks[i].hp -= dmg;
-						DHP -= dmg;
+						dhp -= dmg;
 						printf("Damage -  %.f \n", dmg);
 						printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
 
@@ -227,7 +227,7 @@ int main()
 				printf("Hunter won!!! %d / %d \n", dkill, numd);
 				return 0;
 			}
-			else if (DHP <= 0)
+			else if (dhp <= 0)
 			{
 				printf("Hunter won! All ducks were shoted down ! %d / %d !\n", dkill, numd);
 				return 0;

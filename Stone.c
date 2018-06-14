@@ -4,14 +4,18 @@
 #include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library
 
+
+
 struct Hunter
 {
 	bool alive;
+	int x;
+	int y;
 	double hp;
 	double dmg;
 };
 
-struct Hunter Robbin = { true, 500.0, 60.0 }; // the hunter himself
+struct Hunter Robbin = { true, 11, 11, 500.0, 60.0 }; // the hunter himself
 
 struct Duck {       // main structure for ducks with set parametrs
 
@@ -27,9 +31,9 @@ struct Duck {       // main structure for ducks with set parametrs
 
 };
 
-struct Duck RedHatDuck = { true, true, true, 11, 11,120.0, 0.0, "RedHatDuck " };
+struct Duck RedHatDuck = { true, true, true, 11, 11,120.0, 0.0, "RedHatDuck  " };
 struct Duck MallardDuck = { true, true, true, 11, 11,130.0, 0.0, "MallardDuck " };
-struct Duck RubberDuck = { true, true, false, 11, 11,200.0, 20.0, "RubberDuck " };
+struct Duck RubberDuck = { true, true, false, 11, 11,200.0, 20.0, "RubberDuck  " };
 
 struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in my point of view 20 ducks for one small lake is enough)
 
@@ -71,45 +75,83 @@ double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) /
 }
 
 
-void PositionOnLake(int numd, int xlake, int ylake)
+void PositionOnLake(int numd, int lake)
 {
-	int i;
+	int i=0, j=0;
 	int xrand = 0, yrand = 0;
-	bool rok = false, yok = true;
+	bool okxy = false;
 
-	//X
-	for (i = 0; i < numd; i++)
+	while (i < numd)
 	{
-		xrand = rand() % 10;
-		while (rok != true)
-		{
-			for (i = 0; i < numd; i++)
+		okxy = false;
+		xrand = rand() % lake;	
+		yrand = rand() % lake;
+		
+		for (j = 0; j < i; j++)
+		{ //////////////////////////////////////////////////////// checck check checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+			if (((ducks[i].x == xrand) && (ducks[i].y == yrand)) && ((ducks[i].x == xrand-1) && (ducks[i].y == yrand)) && ((ducks[i].x == xrand) && (ducks[i].y == yrand -1)) && ((ducks[i].x == xrand) && (ducks[i].y  == yrand -1)) && ((ducks[i].x == xrand) && (ducks[i].y == yrand +1)) && ((ducks[i].x == xrand+1) && (ducks[i].y == yrand - 1)) && ((ducks[i].x == xrand-1) && (ducks[i].y == yrand + 1)) && ((ducks[i].x == xrand-1) && (ducks[i].y == yrand - 1)))
 			{
-				if(xrand==ducks[i].x)
-					xrand== rand() % 10;
-				
+				okxy = true;
+				break;
 			}
 		}
-	
-	
+		if (okxy == false)
+		{
+			ducks[i].x = xrand;
+			ducks[i].y = yrand;
+			i++;
+		}
+
 	}
 
 
-	//Y
+	printf("Ducks positions in the lake :\n");
+	i = 0;
+	while (i < numd-1)
+	{
+		printf("\n[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", i+1, ducks[i].type, ducks[i].x, ducks[i].y, i + 2, ducks[i+1].type, ducks[i+1].x, ducks[i+1].y);
+		i += 2;
+	}
+}	
+
+
+void LakeMap(int numd,const int lake)
+{
+	int i = 0, j = 0, k = 0;
+	char map[25][25];
+	for (i = 0; i < lake; i++)
+		{	
+			for (j = 0; j < lake; j++)
+				{
+					for (k = 0; k < numd; k++)
+					{
+						if ((i == ducks[k].x) && (j == ducks[k].y))
+						{
+							map[i][j] = 'D';
+							break;
+						}
+						else
+							map[i][j] = '~';
+					}
+				
+				printf(" %c ", map[i][j]);
+				}
+			printf("\n");
+		}
+
 
 
 
 }
 
 
-
-
 int main()
 {
+
 	srand(time(NULL));
 
-	int i = 0, j, r = 0, xlake=10, ylake=10, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
-
+	int i = 0, j, r = 0, lake = 25, r1 = 0, r0, typd = 0, rhtcount = 0, rbrcount = 0, mlrcount = 0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
+	
 	//typd - duck type; xxxcount - each type counters; crit - critical hit;	stotnum - shot counter;	dklive/kill - counters of ducks
 
 	char s[1];
@@ -117,8 +159,19 @@ int main()
 	int numd = rand() % 6 + 15;  //randomly choose number of ducks (for random in scale [M1; M2] : Number = rand() % (M2 - M1 + 1) + M1)
 	dklive = numd;
 
-
+	
+	
 	double dhp = DuckArray(typd, rhtcount, rbrcount, mlrcount, numd); //HP of all ducks & duckarray creation
+
+	printf("\n---------------------------------------------------------------\n\n");
+
+	PositionOnLake(numd, lake);
+
+
+	printf("\n---------------------------------------------------------------\n\n");
+
+	LakeMap(numd,lake);
+
 	printf("\n---------------------------------------------------------------\n\n");
 	printf("In total Ducks have %.f HP\n", dhp);
 	printf("Hunter has %.f HP and %.f DMG \n\n", Robbin.hp, Robbin.dmg);
@@ -129,7 +182,7 @@ int main()
 	scanf("%c", &s);
 
 
-
+	
 	while (dhp > 0) //main_cykle
 	{
 
@@ -278,6 +331,9 @@ int main()
 
 		}
 	}
+	
+
+	
 
 
 	system("pause");

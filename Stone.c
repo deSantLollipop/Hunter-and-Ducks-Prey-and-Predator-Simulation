@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>				//check dhp/DHP
 #include <time.h>
 #include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>				//check dhp/DHP
 #include <time.h>
+#include <math.h>
 #include <string.h>
 #include <stdbool.h> // It seems that you may not need on other computer this library
-
 
 
 struct Hunter
@@ -148,7 +148,7 @@ void PositionOnLake(int numd, int lake)
 }	
 
 
-void LakeMap(int numd,const int lake, int size)
+void LakeMap(int numd,	int lake, int size)
 {
 	int i = 0, j = 0, k = 0, g = 0;
 	char map[25][25][10]; 
@@ -230,7 +230,8 @@ void LakeMap(int numd,const int lake, int size)
 
 }
 
-int Hunt(int numd, double dhp)
+
+int Hunt(int numd, double dhp, int lake, int size)
 {
 	int i = 0, /*?j?*/j = 0, r = 0, r1 = 0, r0, crit = 11, shotnum = 0, dklive = 0, dkill = 0;
 	//crit - critical hit;	stotnum - shot counter;	dklive/kill - counters of ducks
@@ -238,6 +239,8 @@ int Hunt(int numd, double dhp)
 	double dmg = 0.0;
 	dklive = numd;
 
+	i = MinDistance(numd); //calculating distance to the nearest duck
+	
 	while (dhp > 0) //main_cykle
 	{
 		r0 = rand() % 3 + 1;             //hunter has 1-2 extra shots  
@@ -355,16 +358,18 @@ int Hunt(int numd, double dhp)
 				}
 			}
 
-			if (ducks[i].hp <= 0)                          //cheking if duck is alive
+			if (ducks[i].hp <= 0)					           //cheking if duck is alive
 			{
 				ducks[i].alive = false;
-				dkill++;         				//kill counter
+				dkill++;         													//kill counter
 				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type);
 				printf("---------------------------------------------------------------\n");
-				dklive--;                                  //live counter
-				i++;         				//switching to the next duck in case of death
-			}
-			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 30))  //conditions for end of game simulation
+				dklive--;																  //live counter
+				HunterMove(i);															 //hunter moves to the duck place
+				i = MinDistance(numd);		//i++;         								//switching to the next duck -  nearest to Robbin position
+				LakeMap(numd, lake, size);
+			}		
+			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 50))  //conditions for end of game simulation
 			{
 				printf("Hunter won!!! %d / %d \n", dkill, numd);
 				return 0;
@@ -374,7 +379,7 @@ int Hunt(int numd, double dhp)
 				printf("Hunter won! All ducks were shoted down ! %d / %d !\n", dkill, numd);
 				return 0;
 			}
-			else if ((shotnum >= 30) || (Robbin.hp <= 0))
+			else if ((shotnum >= 50) || (Robbin.hp <= 0))
 			{
 				printf("Ducks won!!! %d alive ducks\n", dklive);
 				return 0;
@@ -385,6 +390,42 @@ int Hunt(int numd, double dhp)
 
 
 }
+
+
+int MinDistance(int numd)
+{
+
+	int i = 0, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+	double *d, min = 36.0;
+
+	d = (double*)malloc(numd * sizeof(int));
+
+	for (i = 0; i < numd; i++)
+	{
+		if (ducks[i].alive==true)
+		d[i] = pow(((ducks[i].x - Robbin.x)*+(ducks[i].y - Robbin.y)),0.5);
+	}
+
+	for (i = 0; i < numd; ++i)
+	{
+		if (d[i] < min)
+		{
+			min = d[i];
+		}
+	}
+	printf("Minimal distance is - %.f , nearest duck - %s ", min, ducks[i].type);
+
+	return i;
+}
+
+
+int HunterMove(int i)
+{
+	Robbin.x = ducks[i].x;
+	Robbin.y = ducks[i].y;
+}
+
+
 
 int main()
 {
@@ -421,8 +462,20 @@ int main()
 	scanf("%c", &s);
 	scanf("%c", &s);
 	
-	Hunt(numd,dhp);
-
+	Hunt(numd, dhp, lake, size);
 	system("pause");
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

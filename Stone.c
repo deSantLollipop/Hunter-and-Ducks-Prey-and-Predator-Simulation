@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>				//check dhp/DHP
+#include <stdlib.h>				//check dhp/DHP 
 #include <time.h>
 #include <math.h>
 #include <string.h>
@@ -37,6 +37,7 @@ struct Duck MallardDuck = { true, true, true,  26, 26, 130.0,  0.0, "MallardDuck
 struct Duck RubberDuck  = { true, true, false, 26, 26, 200.0, 20.0, "RubberDuck  ", "rbDuck" };
 
 struct Duck ducks[20]; //global array ducks of structures type Duck (max 20, in my point of view 20 ducks for one small lake is enough)
+
 
 double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) //function type double
 {
@@ -78,7 +79,7 @@ double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) /
 }
 
 
-void PositionOnLake(int numd, int lake)
+void StartPositionOnLake(int numd, int lake)
 {
 	int i=0, j=0;
 	int xrand = 0, yrand = 0;
@@ -171,11 +172,15 @@ void LakeMap(int numd,	int lake, int size)
 						
 						if ((ducks[k].x == i) && (ducks[k].y == j))
 						{
-							if (ducks[k].alive == true)
+							if (ducks[k].here == false)
+							{
+								smap[i][j] = '~';
+							}	else if (ducks[k].alive == true)
 							{	
 								smap[i][j] = 'D';
 								break;
 							}
+							
 						}
 						else
 							smap[i][j] = '~';
@@ -248,7 +253,6 @@ int MinDistance(int numd)
 	double d[25], min = 36.0;
 
 	//d = (double*)malloc(numd * sizeof(int));
-
 	for (i = 0; i < numd; i++)
 	{
 		if (ducks[i].alive == true)
@@ -265,21 +269,93 @@ int MinDistance(int numd)
 		{
 			min = d[i];
 			imin = i;
-			printf("d[%d]=%f , min =%f \n", i, d[i], min);
+			//printf("d[%d]=%f , min =%f \n", i, d[i], min);
 		}
 	}
-	printf("Minimal distance is  %f, nearest duck [%d] - %s \n\n", min ,imin, ducks[i].type);
-	
-	/*free(d);*/
-	
+	printf("Minimal distance is  %f, nearest duck [%d] ", min ,imin);
+	for (i = 0; i < 13;++i)
+	printf("%c",ducks[imin].type[i]);
+	printf("\n");
+
+
 	return imin;
 }
 
-int HunterMove(int i)
+
+void Moves(int i, int dklive, int lake)
 {
+	/*int g = 0, j = 0, k=0;
+	int xrand = 0, yrand = 0, ra = 0, rb = 0;
+	bool okxy = false;*/
+
 	Robbin.x = ducks[i].x;
 	Robbin.y = ducks[i].y;
+	
+
+
+	/*while (g < dklive)
+	{
+			okxy = false;
+			while (g)
+			{
+				ra = rand() % (7) - 3;
+				ra = rand() % (7) - 3;
+				if ((xrand < lake) && (yrand < lake))
+				{
+					xrand = ducks[g].x + ra;
+					yrand = ducks[g].y + rb;
+					break;
+				}
+			}
+
+
+
+		for (j = 0; j < g; j++)
+		{
+			if (((ducks[j].x == (xrand - 1)) && (ducks[j].y == (yrand + 1))) ||
+				((ducks[j].x == (xrand)) && (ducks[j].y == (yrand + 1))) ||
+				((ducks[j].x == (xrand + 1)) && (ducks[j].y == (yrand + 1))) ||
+				((ducks[j].x == (xrand - 1)) && (ducks[j].y == (yrand))) ||
+				((ducks[j].x == (xrand)) && (ducks[j].y == (yrand))) ||
+				((ducks[j].x == (xrand + 1)) && (ducks[j].y == (yrand))) ||
+				((ducks[j].x == (xrand - 1)) && (ducks[j].y == (yrand - 1))) ||
+				((ducks[j].x == (xrand)) && (ducks[j].y == (yrand - 1))) ||
+				((ducks[j].x == (xrand + 1)) && (ducks[j].y == (yrand - 1))))
+			{
+				okxy = true;
+				break;
+			}
+		}
+		if (okxy == false)
+		{
+			ducks[g].x = xrand;
+			ducks[g].y = yrand;
+			i++;
+		}
+
+	}
+
+	printf("Hunter position in the lake :\n");
+	printf("%s ( x = %d ; y = %d )\n\n", Robbin.name, Robbin.x, Robbin.y);
+
+	printf("Ducks positions in the lake :\n");
+	g = 0;
+	while (g < dklive)
+	{
+		if (g == dklive - 1)
+			printf("\t\t\t\t\t\t[%d] %s ( x = %d ; y = %d )\n", g + 1, ducks[g].type, ducks[g].x, ducks[g].y);
+		else
+			printf("[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", g + 1, ducks[g].type, ducks[g].x, ducks[g].y, g + 2, ducks[g + 1].type, ducks[g + 1].x, ducks[g + 1].y);
+		g += 2;
+	}
+
+
+
+	*/
 }
+
+
+
 
 
 int Hunt(int numd, double dhp, int lake, int size)
@@ -412,12 +488,13 @@ int Hunt(int numd, double dhp, int lake, int size)
 			if (ducks[i].hp <= 0)					           //cheking if duck is alive
 			{
 				ducks[i].alive = false;
+				ducks[i].here = false;
 				dkill++;         													//kill counter
 				printf("%s was shoted by Robbin !\n +1 Kill\n", ducks[i].type);
 				printf("---------------------------------------------------------------\n");
-				dklive--;																  //live counter
-				HunterMove(i);															 //hunter moves to the duck place
-				i = MinDistance(numd);		//i++;         								//switching to the next duck -  nearest to Robbin position
+				dklive--;														  //live counter
+				Moves(i,dklive,lake);												 //hunter moves to the duck place, ducks swimming
+				i = MinDistance(numd);		//i++;		       					//switching to the next duck -  nearest to Robbin position
 				LakeMap(numd, lake, size);
 			}		
 			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 50))  //conditions for end of game simulation
@@ -462,7 +539,7 @@ int main()
 	
 	printf("\n---------------------------------------------------------------\n\n");
 
-	PositionOnLake(numd, lake);
+	StartPositionOnLake(numd, lake);
 
 
 	printf("\n---------------------------------------------------------------\n\n");

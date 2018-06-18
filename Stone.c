@@ -49,6 +49,7 @@ double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) /
 		{
 			ducks[i] = RedHatDuck;
 			rhtcount++;
+			
 			dhp += ducks[i].hp;
 		}
 		if (typd == 1)
@@ -63,16 +64,17 @@ double DuckArray(int typd, int rhtcount, int rbrcount, int mlrcount, int numd) /
 			rbrcount++;
 			dhp += ducks[i].hp;
 		}
+		
+		ducks[i].alive = true;
 
-		if (i == (numd - 1))
-		{
-			printf("\n \t\t\t Ducks and Robbin\n  Ducks in total : %d\n  ", numd);
-			printf("RedhatDucks : %d\n  ", rhtcount);
-			printf("MallarDucks : %d\n  ", mlrcount);
-			printf("RubberDucks : %d\n  ", rbrcount);
-		}
-	}
-	return dhp;
+}
+
+		printf("\n \t\t\t Ducks and Robbin\n  Ducks in total : %d\n  ", numd);
+		printf("RedhatDucks : %d\n  ", rhtcount);
+		printf("MallarDucks : %d\n  ", mlrcount);
+		printf("RubberDucks : %d\n  ", rbrcount);
+
+		return dhp;
 }
 
 
@@ -140,7 +142,7 @@ void PositionOnLake(int numd, int lake)
 	while (i < numd)
 	{
 		if (i==numd-1)
-			printf("[%d]  %s ( x = %d ; y = %d )\n", i + 1, ducks[i].type, ducks[i].x, ducks[i].y);
+			printf("\t\t\t\t\t\t[%d] %s ( x = %d ; y = %d )\n", i + 1, ducks[i].type, ducks[i].x, ducks[i].y);
 		else
 			printf("[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", i+1, ducks[i].type, ducks[i].x, ducks[i].y, i + 2, ducks[i+1].type, ducks[i+1].x, ducks[i+1].y);
 		i += 2;
@@ -160,22 +162,29 @@ void LakeMap(int numd,	int lake, int size)
 		for (i = 0; i < lake; i++)
 		{
 			for (j = 0; j < lake; j++)
-			{
+			{		
+				
+				
+				
 				for (k = 0; k < numd; k++)
 				{
-					if ((i == ducks[k].x) && (j == ducks[k].y))
-					{
-						smap[i][j] = 'D';
-						break;
-					}
-					else if ((i == Robbin.x) && (j == Robbin.y))
-					{
+						
+						if ((ducks[k].x == i) && (ducks[k].y == j))
+						{
+							if (ducks[k].alive == true)
+							{	
+								smap[i][j] = 'D';
+								break;
+							}
+						}
+						else
+							smap[i][j] = '~';
+				}
+					
+				if ((i == Robbin.x) && (j == Robbin.y))
+				{
 						smap[i][j] = 'R';
-					}
-					else
-						smap[i][j] = '~';
-
-
+					
 				}
 				printf("%c ", smap[i][j]);
 
@@ -228,6 +237,48 @@ void LakeMap(int numd,	int lake, int size)
 	}
 
 
+}
+
+
+int MinDistance(int numd)
+{
+
+	int i = 0, imin=0;
+	/*double *d; */
+	double d[25], min = 36.0;
+
+	//d = (double*)malloc(numd * sizeof(int));
+
+	for (i = 0; i < numd; i++)
+	{
+		if (ducks[i].alive == true)
+		{
+			d[i] = pow(((ducks[i].x - Robbin.x)*(ducks[i].x - Robbin.x) + (ducks[i].y - Robbin.y)*(ducks[i].y - Robbin.y)), 0.5);
+			printf("d[%d]=%f \n", i, d[i]);
+		}
+	}
+
+	for (i = 0; i < numd; ++i)
+	{
+		if (ducks[i].alive == true)
+		if (d[i] < min)
+		{
+			min = d[i];
+			imin = i;
+			printf("d[%d]=%f , min =%f \n", i, d[i], min);
+		}
+	}
+	printf("Minimal distance is  %f, nearest duck [%d] - %s \n\n", min ,imin, ducks[i].type);
+	
+	/*free(d);*/
+	
+	return imin;
+}
+
+int HunterMove(int i)
+{
+	Robbin.x = ducks[i].x;
+	Robbin.y = ducks[i].y;
 }
 
 
@@ -392,38 +443,6 @@ int Hunt(int numd, double dhp, int lake, int size)
 }
 
 
-int MinDistance(int numd)
-{
-
-	int i = 0, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-	double *d, min = 36.0;
-
-	d = (double*)malloc(numd * sizeof(int));
-
-	for (i = 0; i < numd; i++)
-	{
-		if (ducks[i].alive==true)
-		d[i] = pow(((ducks[i].x - Robbin.x)*+(ducks[i].y - Robbin.y)),0.5);
-	}
-
-	for (i = 0; i < numd; ++i)
-	{
-		if (d[i] < min)
-		{
-			min = d[i];
-		}
-	}
-	printf("Minimal distance is - %.f , nearest duck - %s ", min, ducks[i].type);
-
-	return i;
-}
-
-
-int HunterMove(int i)
-{
-	Robbin.x = ducks[i].x;
-	Robbin.y = ducks[i].y;
-}
 
 
 
@@ -466,16 +485,3 @@ int main()
 	system("pause");
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

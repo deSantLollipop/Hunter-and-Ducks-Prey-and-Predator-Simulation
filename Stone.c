@@ -151,45 +151,46 @@ void StartPositionOnLake(int numd, int lake)
 }	
 
 
-void LakeMap(int numd,	int lake, int size)
+void LakeMap(int numd, int lake, int size)
 {
 	int i = 0, j = 0, k = 0, g = 0;
-	char map[25][25][10]; 
+	char map[25][25][10];
 	char smap[25][25];
-	
+
 	if (size == 0)
 	{
-													//Small map
+		//Small map
 		for (i = 0; i < lake; i++)
 		{
 			for (j = 0; j < lake; j++)
-			{		
-				
-				
-				
+			{
+
+
+
 				for (k = 0; k < numd; k++)
 				{
-						
-						if ((ducks[k].x == i) && (ducks[k].y == j))
+
+					if ((ducks[k].x == i) && (ducks[k].y == j))
+					{
+						if (ducks[k].here == false)
 						{
-							if (ducks[k].here == false)
-							{
-								smap[i][j] = '~';
-							}	else if (ducks[k].alive == true)
-							{	
-								smap[i][j] = 'D';
-								break;
-							}
-							
-						}
-						else
 							smap[i][j] = '~';
+						}
+						else if (ducks[k].alive == true)
+						{
+							smap[i][j] = 'D';
+							break;
+						}
+
+					}
+					else
+						smap[i][j] = '~';
 				}
-					
+
 				if ((i == Robbin.x) && (j == Robbin.y))
 				{
-						smap[i][j] = 'R';
-					
+					smap[i][j] = 'R';
+
 				}
 				printf("%c ", smap[i][j]);
 
@@ -199,49 +200,65 @@ void LakeMap(int numd,	int lake, int size)
 	}
 	else if (size == 1)
 	{
-													//Big map
+		//Big map
 		for (i = 0; i < lake; i++)
 		{
+
 			for (j = 0; j < lake; j++)
 			{
+
 				for (k = 0; k < numd; k++)
 				{
-					if ((i == ducks[k].x) && (j == ducks[k].y))
+					if ((ducks[k].x == i) && (ducks[k].y == j))
 					{
-						for (g = 0; g < 7; g++)
+						if (ducks[k].here == false)
 						{
-							map[i][j][g] = ducks[k].smallt[g];
+							for (g = 0; g < 7; g++)
+							{
+								map[i][j][g] = ' ';
+								map[i][j][g + 1] = '~';
+								g++;
+							}
 						}
-						break;
+						else if (ducks[k].alive == true)
+						{
+							for (g = 0; g < 7; g++)
+							{
+								map[i][j][g] = ducks[k].smallt[g];
+							}
+							break;
+						}
 					}
-					else if ((i == Robbin.x) && (j == Robbin.y))
+							else
+							{
+									for (g = 0; g < 7; g++)
+									{
+										map[i][j][g] = ' ';
+										map[i][j][g + 1] = '~';
+										g++;
+									}
+							}
+			}
+				
+				if ((i == Robbin.x) && (j == Robbin.y))
+				{
+					for (g = 0; g < 7; g++)
 					{
-						for (g = 0; g < 7; g++)
-						{
-							map[i][j][g] = Robbin.name[g];
-						}
-					}
-					else
-					{
-						for (g = 0; g < 7; g++)
-						{
-							map[i][j][g] = ' ';
-							map[i][j][g + 1] = '~';
-							g++;
-						}
+						map[i][j][g] = Robbin.name[g];
 					}
 				}
+
 				for (g = 0; g < 7; g++)
 				{
 					printf("%c", map[i][j][g]);
 				}
+
 			}
+
 			printf("\n\n");
+
 		}
-
 	}
-
-
 }
 
 
@@ -258,7 +275,7 @@ int MinDistance(int numd)
 		if (ducks[i].alive == true)
 		{
 			d[i] = pow(((ducks[i].x - Robbin.x)*(ducks[i].x - Robbin.x) + (ducks[i].y - Robbin.y)*(ducks[i].y - Robbin.y)), 0.5);
-			printf("d[%d]=%f \n", i, d[i]);
+			//printf("d[%d]=%f \n", i, d[i]);
 		}
 	}
 
@@ -353,9 +370,6 @@ void Moves(int i, int dklive, int lake)
 
 	*/
 }
-
-
-
 
 
 int Hunt(int numd, double dhp, int lake, int size)
@@ -518,8 +532,6 @@ int Hunt(int numd, double dhp, int lake, int size)
 
 
 }
-
-
 
 
 

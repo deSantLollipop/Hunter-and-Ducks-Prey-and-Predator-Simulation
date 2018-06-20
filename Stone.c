@@ -136,16 +136,16 @@ void StartPositionOnLake(int numd, int lake)
 	}
 
 	printf("Hunter position in the lake :\n");
-	printf("%s ( x = %d ; y = %d )\n\n", Robbin.name, Robbin.x, Robbin.y);
+	printf("%s ( x = %d ; y = %d )\n\n", Robbin.name, Robbin.y, Robbin.x); // XY are  inverted
 
 	printf("Ducks positions in the lake :\n");
 	i = 0;
 	while (i < numd)
 	{
 		if (i==numd-1)
-			printf("\t\t\t\t\t\t[%d] %s ( x = %d ; y = %d )\n", i + 1, ducks[i].type, ducks[i].x, ducks[i].y);
+			printf("\t\t\t\t\t\t[%d] %s ( x = %d ; y = %d )\n", i + 1, ducks[i].type, ducks[i].y, ducks[i].x);
 		else
-			printf("[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", i+1, ducks[i].type, ducks[i].x, ducks[i].y, i + 2, ducks[i+1].type, ducks[i+1].x, ducks[i+1].y);
+			printf("[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", i+1, ducks[i].type, ducks[i].y, ducks[i].x, i + 2, ducks[i+1].type, ducks[i+1].y, ducks[i+1].x);
 		i += 2;
 	}
 }	
@@ -259,6 +259,9 @@ void LakeMap(int numd, int lake, int size)
 
 		}
 	}
+
+	printf("\n");
+	printf("%s ( x = %d ; y = %d )\n\n", Robbin.name, Robbin.y, Robbin.x);
 }
 
 
@@ -397,6 +400,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 				printf("Possible critical hit= %d %%\nshoting...\n", 100 / crit);
 				if (r1 == 0)												// possibility of critical hit is 0.2
 				{
+					_sleep(1000);
 					dmg = Robbin.dmg + Robbin.dmg*(crit / 100.0);
 					ducks[i].hp -= dmg;
 					dhp -= dmg;
@@ -410,6 +414,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 				}
 				else
 				{
+					_sleep(1000);
 					dmg = Robbin.dmg;
 					ducks[i].hp -= dmg;
 					dhp -= dmg;
@@ -426,6 +431,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 				switch (r)
 				{
 				case 0:
+					_sleep(1000);
 					printf("Possible critical hit= %d %%\nshoting...\n", 100 / 2);
 					dmg = Robbin.dmg * 2;
 					ducks[i].hp -= dmg;
@@ -438,6 +444,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 					printf("---------------------------------------------------------------\n");
 					break;
 				case 1:
+					_sleep(1000);
 					printf("Possible critical hit= %d %%\nshoting...\n", 100 / crit);
 					crit = rand() % 10 + 1;
 					printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
@@ -447,6 +454,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 					printf("---------------------------------------------------------------\n");
 					break;
 				case 2:
+					_sleep(1000);
 					printf("Possible critical hit= %d %%\nshoting...\n", 100 / crit);
 					crit = rand() % 10 + 1;
 					printf("Duck [%d] hp = %.f\n", i, ducks[i].hp);
@@ -470,6 +478,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 					printf("---------------------------------------------------------------\n");
 					break;
 				case 3:
+					_sleep(1000);
 					printf("Possible critical hit= %d %% \nshoting...\n", 100 / crit);
 					crit = rand() % 10 + 1;
 					printf("Duck [%d] hp = %.f \n", i, ducks[i].hp);
@@ -501,6 +510,7 @@ int Hunt(int numd, double dhp, int lake, int size)
 
 			if (ducks[i].hp <= 0)					           //cheking if duck is alive
 			{
+				_sleep(1000);
 				ducks[i].alive = false;
 				ducks[i].here = false;
 				dkill++;         													//kill counter
@@ -509,6 +519,8 @@ int Hunt(int numd, double dhp, int lake, int size)
 				dklive--;														  //live counter
 				Moves(i,dklive,lake);												 //hunter moves to the duck place, ducks swimming
 				i = MinDistance(numd);		//i++;		       					//switching to the next duck -  nearest to Robbin position
+				_sleep(10000);
+				system("cls");
 				LakeMap(numd, lake, size);
 			}		
 			if ((dkill >= 1) && (dkill >= numd / 2) && (shotnum < 50))  //conditions for end of game simulation

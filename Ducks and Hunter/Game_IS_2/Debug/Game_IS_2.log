@@ -1,0 +1,26 @@
+﻿  Stone.c
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(403): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(417): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(434): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(447): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(457): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(481): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(513): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(522): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(553): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(571): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: see declaration of 'scanf'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(582): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: see declaration of 'scanf'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(583): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: see declaration of 'scanf'
+c:\users\1\documents\visual studio 2015\projects\game_is_2\game_is_2\stone.c(546): warning C4715: 'Hunt': not all control paths return a value
+  Game_IS_2.vcxproj -> C:\Users\1\Documents\Visual Studio 2015\Projects\Game_IS_2\Debug\Game_IS_2.exe

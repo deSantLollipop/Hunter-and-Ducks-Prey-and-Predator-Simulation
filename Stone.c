@@ -327,9 +327,6 @@ void Moves(int i, int dklive, int lake)
 					break;
 				}
 			}
-
-
-
 		for (j = 0; j < g; j++)
 		{
 			if (((ducks[j].x == (xrand - 1)) && (ducks[j].y == (yrand + 1))) ||
@@ -352,12 +349,9 @@ void Moves(int i, int dklive, int lake)
 			ducks[g].y = yrand;
 			i++;
 		}
-
 	}
-
 	printf("Hunter position in the lake :\n");
 	printf("%s ( x = %d ; y = %d )\n\n", Robbin.name, Robbin.x, Robbin.y);
-
 	printf("Ducks positions in the lake :\n");
 	g = 0;
 	while (g < dklive)
@@ -368,9 +362,6 @@ void Moves(int i, int dklive, int lake)
 			printf("[%d]  %s ( x = %d ; y = %d )\t \t[%d] %s ( x = %d ; y = %d )\n", g + 1, ducks[g].type, ducks[g].x, ducks[g].y, g + 2, ducks[g + 1].type, ducks[g + 1].x, ducks[g + 1].y);
 		g += 2;
 	}
-
-
-
 	*/
 }
 
